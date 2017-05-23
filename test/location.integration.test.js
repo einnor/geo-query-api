@@ -116,4 +116,40 @@ describe('Location CRUD integration testing', function() {
           });
     });
   });
+
+
+  describe('PUT:/locations/:id update a location', function() {
+
+    var response = {};
+
+    before(function(done) {
+      var newLocation = {
+        name: faker.address.streetName(),
+        loc: [faker.address.longitude(), faker.address.latitude()]
+      };
+      api.post('/api/locations')
+         .set('Accept', 'application/x-www-form-urlencoded')
+         .send(newLocation)
+         .expect('Content-Type', '/json/')
+         .expect(200)
+         .end(function(err, res) {
+           response = res.body;
+            done();
+          });
+    });
+
+    it('should be able to update a location using id', function(done) {
+      var updatedLocation = {name: 'Lane 26'};
+      api.put('/api/locations/' + response.location._id)
+         .set('Accept', 'application/x-www-form-urlencoded')
+         .send(updatedLocation)
+         .expect('Content-Type', '/json/')
+         .expect(200)
+         .end(function(err, res) {
+           expect(res.body.status).to.be.true;
+           expect(res.body.location.name).to.be.equal('Lane 26');
+           done();
+         });
+    });
+  });
 });
