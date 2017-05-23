@@ -83,4 +83,33 @@ describe('Location Unit Testing', function() {
       });
     });
   });
+
+
+  describe('remove() method to delete an existing location and return object', function() {
+
+    // it will pass if the method remove() exists and the location is deleted
+    it('should delete a location by id', function(done) {
+      var LocationMock = sinon.mock(new Location({
+        _id: 12345,
+        name: 'Ruaka Town',
+        loc: [26.418, 14.9706]
+      }));
+      var location = LocationMock.object;
+      var expectedResult = {
+        _id: 12345,
+        name: 'Ruaka Town',
+        loc: [26.418, 14.9706]
+      };
+      LocationMock.expects('remove').withArgs({_id: location._id}).yields(null, expectedResult);
+
+      location.remove({_id: location._id}, function(err, result) {
+        LocationMock.verify();
+        LocationMock.restore();
+        expect(result).to.be.a('object');
+        expect(result.loc).to.be.a('array');
+        expect(result.name).to.be.equal('Ruaka Town');
+        done();
+      });
+    });
+  });
 });
