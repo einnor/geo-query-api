@@ -46,9 +46,10 @@ describe('Location CRUD integration testing', function() {
 
     before(function(done) {
       var newLocation = {
-        name: faker.town,
-        loc: [faker.longitude, faker.latitude]
+        name: faker.address.streetName(),
+        loc: [faker.address.longitude(), faker.address.latitude()]
       };
+      console.log(newLocation);
       api.post('/api/locations')
          .set('Accept', 'application/x-www-form-urlencoded')
          .send(newLocation)
@@ -61,6 +62,7 @@ describe('Location CRUD integration testing', function() {
     });
 
     it('should return a 200 response', function (done) {
+      console.log(response);
 			api.get('/api/locations/' + response.location._id)
          .set('Accept', 'application/json')
 			   .expect(200, done);
@@ -97,8 +99,8 @@ describe('Location CRUD integration testing', function() {
 
     it('should be able to save a new location', function(done) {
       var newLocation = {
-        name: faker.town,
-        loc: [faker.longitude, faker.latitude]
+        name: faker.address.streetName(),
+        loc: [faker.address.longitude(), faker.address.latitude()]
       };
       api.post('/api/locations')
          .set('Accept', 'application/x-www-form-urlencoded')
