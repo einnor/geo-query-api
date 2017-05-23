@@ -6,7 +6,7 @@ var LocationCtrl = {
   Index: function(req, res){
     Location.find({}, function(err, locations){
       if(err) {
-        res.json({status: false, error: "Something went wrong"});
+        res.json({status: false, error: err.message});
         return;
       }
       res.json({status: true, location: locations});
@@ -17,7 +17,7 @@ var LocationCtrl = {
   Show: function(req, res){
     Location.findOne({_id: req.params.id}, function(err, location){
       if(err) {
-        res.json({status: false, error: "Something went wrong"});
+        res.json({status: false, error: err.message});
         return;
       }
       res.json({status: true, location: location});
@@ -29,7 +29,7 @@ var LocationCtrl = {
     var location = new Location(req.body);
     location.save(function(err, location){
       if(err) {
-        res.json({status: false, error: "Something went wrong"});
+        res.json({status: false, error: err.message});
         return;
       }
       res.json({status: true, message: "Location successfully saved!", location: location});
@@ -43,7 +43,7 @@ var LocationCtrl = {
       location.name = name;
       location.save(function(err, location){
         if(err) {
-          res.json({status: false, error: "Name was not updated!"});
+          res.json({status: false, error: err.message});
         }
         res.json({status: true, message: "Name was successfully updated!", location: location});
       });
@@ -54,7 +54,7 @@ var LocationCtrl = {
   Delete: function(req, res){
     Location.remove({_id: req.params.id}, function(err, location){
       if(err) {
-        res.json({status: false, error: "Location was not deleted!"});
+        res.json({status: false, error: err.message});
         return;
       }
       res.json({status: true, message: "Location was successfully deleted!!", location: location});
@@ -70,7 +70,7 @@ var LocationCtrl = {
     });
     location.seed(function(err, locations){
       if(err) {
-        res.json({status: false, error: "Something went wrong"});
+        res.json({status: false, error: err.message});
         return;
       }
       res.json({status: true, location: locations});
@@ -79,9 +79,9 @@ var LocationCtrl = {
 
   // Geofencing, takes in user's coordiantes L and radius R
   Geofencing: function(req, res) {
-    var radius = req.body.radius || 8; // set radius to 8km if undefined
+    var radius = parseFloat(req.body.radius) || 8; // set radius to 8km if undefined
     radius = radius / 6371; // convert distance to radians. the radius of Earth is approximately 6371km
-    var coords = [req.body.longitude || 0, req.body.latitude || 0]; // if longitude and/or latitude is undefined, set to 0
+    var coords = [parseFloat(req.body.longitude) || 0, parseFloat(req.body.latitude) || 0]; // if longitude and/or latitude is undefined, set to 0
 
     // find nearest locations to user's coordinates L
     Location.find({
@@ -91,7 +91,48 @@ var LocationCtrl = {
       }
     }, function(err, locations) {
       if (err) {
-        res.json({status: false, error: "Something went wrong"});
+        res.json({status: false, error: err.message});
+        return;
+      }
+      res.json({status: true, location: locations});
+    });
+  },
+
+  // Geofencing, takes in user's coordiantes L and radius R
+  GeofilteringRectangle: function(req, res) {
+    var width = parseFloat(req.body.width) || 10; // set width to 10km if undefined
+    var length = parseFloat(req.body.length) || 15; // set height to 15km if undefined
+
+    // convert distance to radians. the radius of Earth is approximately 6371km
+    width = width / 6371;
+    length = length / 6371;
+    var longitude = parseFloat(req.body.longitude) || 0;
+    var latitude = parseFloat(req.body.latitude) || 0;
+    var coords = [longitude, latitude]; // if longitude and/or latitude is undefined, set to 0
+
+    // The rectangle coordinates
+    var topLeft = [longitude - length/2, latitude + width/2];
+    var topRight = [longitude + length/2, latitude + width/2];
+    var bottomRight = [longitude + length/2, latitude - width/2];
+    var bottomLeft = [longitude - length/2, latitude - width/2];
+    var rectangleCoordinates = [
+      topLeft, topRight, bottomRight, bottomLeft, topLeft
+    ];
+
+    // find nearest locations to user's coordinates L
+    Location.find({
+      loc: {
+        $geoWithin: {
+          $geometry: {
+             type : "Polygon",
+             coordinates: [rectangleCoordinates]
+          }
+        }
+      }
+    }, function(err, locations) {
+      if (err) {
+        res.json({status: false, error: err.message});
+        return;
       }
       res.json({status: true, location: locations});
     });

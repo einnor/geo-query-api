@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">73.33% </span>
+        <span class="strong">76.19% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>33/45</span>
+        <span class='fraction'>48/63</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">50% </span>
+        <span class="strong">55.88% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>12/24</span>
+        <span class='fraction'>19/34</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>15/15</span>
+        <span class='fraction'>17/17</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">73.33% </span>
+        <span class="strong">76.19% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>33/45</span>
+        <span class='fraction'>48/63</span>
       </div>
     </div>
   </div>
@@ -144,7 +144,48 @@
 99
 100
 101
-102</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+102
+103
+104
+105
+106
+107
+108
+109
+110
+111
+112
+113
+114
+115
+116
+117
+118
+119
+120
+121
+122
+123
+124
+125
+126
+127
+128
+129
+130
+131
+132
+133
+134
+135
+136
+137
+138
+139
+140
+141
+142
+143</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -237,6 +278,47 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
@@ -253,7 +335,7 @@ var LocationCtrl = {
   Index: function(req, res){
     Location.find({}, function(err, locations){
       <span class="missing-if-branch" title="if path not taken" >I</span>if(err) {
-<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: "Something went wrong"});</span>
+<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
       res.json({status: true, location: locations});
@@ -264,7 +346,7 @@ var LocationCtrl = {
   Show: function(req, res){
     Location.findOne({_id: req.params.id}, function(err, location){
       <span class="missing-if-branch" title="if path not taken" >I</span>if(err) {
-<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: "Something went wrong"});</span>
+<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
       res.json({status: true, location: location});
@@ -276,7 +358,7 @@ var LocationCtrl = {
     var location = new Location(req.body);
     location.save(function(err, location){
       <span class="missing-if-branch" title="if path not taken" >I</span>if(err) {
-<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: "Something went wrong"});</span>
+<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
       res.json({status: true, message: "Location successfully saved!", location: location});
@@ -290,7 +372,7 @@ var LocationCtrl = {
       location.name = name;
       location.save(function(err, location){
         <span class="missing-if-branch" title="if path not taken" >I</span>if(err) {
-<span class="cstat-no" title="statement not covered" >          res.json({status: false, error: "Name was not updated!"});</span>
+<span class="cstat-no" title="statement not covered" >          res.json({status: false, error: err.message});</span>
         }
         res.json({status: true, message: "Name was successfully updated!", location: location});
       });
@@ -301,7 +383,7 @@ var LocationCtrl = {
   Delete: function(req, res){
     Location.remove({_id: req.params.id}, function(err, location){
       <span class="missing-if-branch" title="if path not taken" >I</span>if(err) {
-<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: "Location was not deleted!"});</span>
+<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
       res.json({status: true, message: "Location was successfully deleted!!", location: location});
@@ -317,7 +399,7 @@ var LocationCtrl = {
     });
     location.seed(function(err, locations){
       <span class="missing-if-branch" title="if path not taken" >I</span>if(err) {
-<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: "Something went wrong"});</span>
+<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
       res.json({status: true, location: locations});
@@ -326,9 +408,9 @@ var LocationCtrl = {
 &nbsp;
   // Geofencing, takes in user's coordiantes L and radius R
   Geofencing: function(req, res) {
-    var radius = req.body.radius || <span class="branch-1 cbranch-no" title="branch not covered" >8;</span> // set radius to 8km if undefined
+    var radius = parseFloat(req.body.radius) || 8; // set radius to 8km if undefined
     radius = radius / 6371; // convert distance to radians. the radius of Earth is approximately 6371km
-    var coords = [req.body.longitude || <span class="branch-1 cbranch-no" title="branch not covered" >0,</span> req.body.latitude || <span class="branch-1 cbranch-no" title="branch not covered" >0]</span>; // if longitude and/or latitude is undefined, set to 0
+    var coords = [parseFloat(req.body.longitude) || <span class="branch-1 cbranch-no" title="branch not covered" >0,</span> parseFloat(req.body.latitude) || <span class="branch-1 cbranch-no" title="branch not covered" >0]</span>; // if longitude and/or latitude is undefined, set to 0
 &nbsp;
     // find nearest locations to user's coordinates L
     Location.find({
@@ -338,7 +420,48 @@ var LocationCtrl = {
       }
     }, function(err, locations) {
       <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
-<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: "Something went wrong"});</span>
+<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
+      }
+      res.json({status: true, location: locations});
+    });
+  },
+&nbsp;
+  // Geofencing, takes in user's coordiantes L and radius R
+  GeofilteringRectangle: function(req, res) {
+    var width = parseFloat(req.body.width) || <span class="branch-1 cbranch-no" title="branch not covered" >10;</span> // set width to 10km if undefined
+    var length = parseFloat(req.body.length) || 15; // set height to 15km if undefined
+&nbsp;
+    // convert distance to radians. the radius of Earth is approximately 6371km
+    width = width / 6371;
+    length = length / 6371;
+    var longitude = parseFloat(req.body.longitude) || <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
+    var latitude = parseFloat(req.body.latitude) || <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
+    var coords = [longitude, latitude]; // if longitude and/or latitude is undefined, set to 0
+&nbsp;
+    // The rectangle coordinates
+    var topLeft = [longitude - length/2, latitude + width/2];
+    var topRight = [longitude + length/2, latitude + width/2];
+    var bottomRight = [longitude + length/2, latitude - width/2];
+    var bottomLeft = [longitude - length/2, latitude - width/2];
+    var rectangleCoordinates = [
+      topLeft, topRight, bottomRight, bottomLeft, topLeft
+    ];
+&nbsp;
+    // find nearest locations to user's coordinates L
+    Location.find({
+      loc: {
+        $geoWithin: {
+          $geometry: {
+             type : "Polygon",
+             coordinates: [rectangleCoordinates]
+          }
+        }
+      }
+    }, function(err, locations) {
+      <span class="missing-if-branch" title="if path not taken" >I</span>if (err) {
+<span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
+<span class="cstat-no" title="statement not covered" >        return;</span>
       }
       res.json({status: true, location: locations});
     });
@@ -352,7 +475,7 @@ module.exports = LocationCtrl;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue May 23 2017 17:57:32 GMT+0300 (EAT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue May 23 2017 20:34:33 GMT+0300 (EAT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>

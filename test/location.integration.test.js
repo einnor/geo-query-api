@@ -184,6 +184,30 @@ describe('Location CRUD integration testing', function() {
   });
 
 
+  describe('POST:/locations/geofiltering/rectangle Return a subset S of coordinates from N that are within a rectangle of width w and length l around the user’s location L', function() {
+
+    it('should return a set of coordinates that are within a rectangle of width w and length l around location L', function(done) {
+      var input = {
+        longitude: faker.address.longitude(),
+        latitude: faker.address.latitude(),
+        length: faker.random.number(1, 15),
+        width: faker.random.number(1, 15)
+      };
+      api.post('/api/locations/geofiltering/rectangle')
+         .set('Accept', 'application/x-www-form-urlencoded')
+         .send(input)
+         .expect('Content-Type', '/json/')
+         .expect(200)
+         .end(function(err, res) {
+           console.log(res.body);
+            expect(res.body).to.be.a('object');
+            expect(res.body.location).to.be.a('array');
+            done();
+          });
+    });
+  });
+
+
   describe('POST:/locations/geofencing Return a subset S of coordinates from N that are within a Radius R meters around the user’s L', function() {
 
     it('should return a set of coordinates that are within radius R of location L', function(done) {
@@ -201,29 +225,6 @@ describe('Location CRUD integration testing', function() {
     });
   });
 
-
-  describe('POST:/locations/geofiltering/rectangle Return a subset S of coordinates from N that are within a rectangle of width w and length l around the user’s location L', function() {
-
-    it('should return a set of coordinates that are within a rectangle of width w and length l around location L', function(done) {
-      var input = {
-        longitude: faker.address.longitude(),
-        latitude: faker.address.latitude(),
-        length: faker.random.number(1, 15),
-        width: faker.random.number(1, 15)
-      };
-      api.post('/api/locations/geofiltering')
-         .set('Accept', 'application/x-www-form-urlencoded')
-         .send(input)
-         .expect('Content-Type', '/json/')
-         .expect(200)
-         .end(function(err, res) {
-            expect(res.body).to.be.a('object');
-            expect(res.body.location).to.be.a('array');
-            done();
-          });
-    });
-    });
-  });
 
   describe('POST:/locations/seed auto-populate DB with locations around arbitary location L', function() {
 
