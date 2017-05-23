@@ -8,7 +8,8 @@ var mongoose = require('mongoose');
 require('sinon-mongoose');
 
 // import our location model for unit testing
-var Location = mongoose.model('Location', 'LocationSchema');
+// var Location = mongoose.model('Location', 'LocationSchema');
+var Location = require('../app/models/location.model');
 
 describe('Location Unit Testing', function() {
 
