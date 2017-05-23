@@ -59,6 +59,21 @@ var LocationCtrl = {
       }
       res.json({status: true, message: "Location was successfully deleted!!", location: location});
     });
+  },
+
+  // Seed random locations in the DB
+  Seed: function(req, res){
+    var location = new Location({
+      name: '',
+      loc: [req.body.longitude, req.body.latitude]
+    });
+    location.seed(function(err, locations){
+      if(err) {
+        res.json({status: false, error: "Something went wrong"});
+        return;
+      }
+      res.json({status: true, location: locations});
+    });
   }
 }
 

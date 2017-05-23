@@ -172,13 +172,12 @@ describe('Location CRUD integration testing', function() {
           });
     });
 
-    it('should be able to delete a location using id and return an object of the deleted location', function(done) {
+    it('should be able to delete a location using id', function(done) {
       api.delete('/api/locations/' + response.location._id)
          .expect(200)
          .end(function(err, res) {
            expect(res.body.status).to.be.true;
            expect(res.body.location).to.be.a('object');
-           expect(res.body.location.loc).to.be.a('array');
            done();
          });
     });
@@ -186,18 +185,22 @@ describe('Location CRUD integration testing', function() {
 
   describe('POST:/locations/seed auto-populate DB with locations around arbitary location L', function() {
 
+    before(function (done) {
+      console.log('Deleting test database');
+      mongoose.connection.db.dropDatabase(done);
+    });
+
     it('should be able to seed the DB with random locations', function(done) {
-      var airbitaryLocationL = {
-        loc: [faker.address.longitude(), faker.address.latitude()]
-      };
+      var airbitaryLocationL = {longitude: faker.address.longitude(), latitude: faker.address.latitude()};
       api.post('/api/locations/seed')
          .set('Accept', 'application/x-www-form-urlencoded')
          .send(airbitaryLocationL)
          .expect('Content-Type', '/json/')
          .expect(200)
          .end(function(err, res) {
-            expect(res.body).to.be.a('array');
-            expect(res.body).to.have.lengthOf(10);
+            expect(res.body).to.be.a('object');
+            expect(res.body.location).to.be.a('array');
+            expect(res.body.location).to.have.lengthOf(100);
             done();
           });
     });

@@ -12,6 +12,9 @@ router.get('/locations/:id', LocationController.Show);
 // POST:/locations
 router.post('/locations', LocationController.Create);
 
+// POST:/locations/seed
+router.post('/locations/seed', LocationController.Seed);
+
 // PUT:/locations/:id
 router.put('/locations/:id', LocationController.Update);
 

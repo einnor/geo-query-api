@@ -15,20 +15,19 @@ var LocationSchema = Schema({
 });
 
 // custom method to seed locations about an arbitary location L
-LocationSchema.methods.seed = function(callback) {
-  var longitude = this.loc.longitude;
-  var latitude = this.loc.latitude;
+LocationSchema.methods.seed = function(cb) {
+  var longitude = this.loc[0];
+  var latitude = this.loc[1];
 
-  for (var value of range(10)) {
-    this.model('Location').save({
+  for (var i = 0; i < 100; i++) {
+    location = new Location({
       name: faker.address.streetName(),
       loc: [faker.address.longitude(longitude - 10, longitude + 10), faker.address.latitude(latitude - 10, latitude + 10)]
     });
+    location.save();
   }
 
-  return this.model('Location').find({}, function(err, val) {
-    callback(!!val);
-  });
+  return Location.find({}, cb);
 };
 
 // export our model location model
