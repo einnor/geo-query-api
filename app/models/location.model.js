@@ -21,8 +21,8 @@ LocationSchema.methods.seed = function(callback) {
 
   for (var value of range(10)) {
     this.model('Location').save({
-      name: faker.address.streetName(),
-      loc: [faker.address.longitude(longitude - 10, longitude + 10), faker.address.latitude(latitude - 10, latitude + 10)]
+      name: faker.town,
+      loc: [faker.longitude(longitude - 10, longitude + 10), faker.latitude(latitude - 10, latitude + 10)]
     });
   }
 
