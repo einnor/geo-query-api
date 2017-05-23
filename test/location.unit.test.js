@@ -112,4 +112,25 @@ describe('Location Unit Testing', function() {
       });
     });
   });
+
+
+  describe('seed() method to auto-populate the DB with random locations about an arbitary location L', function() {
+
+    it('should add 100 random locations about location L', function(done) {
+      var LocationMock = sinon.mock(new Location({
+        name: '',
+        loc: [26.418, 14.9706]
+      }));
+      var location = LocationMock.object;
+      LocationMock.expects('seed');
+
+      location.seed(function(err, result) {
+        LocationMock.verify();
+        LocationMock.restore();
+        expect(result).to.be.a('array');
+        expect(result).to.have.lengthOf(100);
+        done();
+      });
+    });
+  });
 });
