@@ -29,4 +29,31 @@ describe('Location Unit Testing', function() {
       });
     });
   });
+
+
+  describe('save() method to save a new location', function() {
+
+    // test will pass if the method save() exists and returns the saved object
+    it('should create a new location and return it', function(done) {
+      var LocationMock = sinon.mock(new Location({
+        name: 'Ruaka Town',
+        loc: [26.418, 14.9706]
+      }));
+      var location = LocationMock.object;
+      var expectedResult = {
+        name: 'Ruaka Town',
+        loc: [26.418, 14.9706]
+      };
+      LocationMock.expects('save').yields(null, expectedResult);
+
+      location.save(function(err, result) {
+        LocationMock.verify();
+        LocationMock.restore();
+        expect(result).to.be.a('object');
+        expect(result.loc).to.be.a('array');
+        expect(result.name).to.be.equal('Ruaka Town');
+        done();
+      });
+    });
+  });
 });
