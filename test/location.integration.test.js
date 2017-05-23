@@ -137,7 +137,7 @@ describe('Location CRUD integration testing', function() {
     });
 
     it('should be able to update a location using id', function(done) {
-      var updatedLocation = {name: 'Lane 26'};
+      var updatedLocation = { name: 'Lane 26' };
       api.put('/api/locations/' + response.location._id)
          .set('Accept', 'application/x-www-form-urlencoded')
          .send(updatedLocation)
