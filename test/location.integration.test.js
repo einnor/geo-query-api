@@ -91,4 +91,27 @@ describe('Location CRUD integration testing', function() {
          });
     });
   });
+
+
+  describe('POST:/locations save a new location', function() {
+
+    it('should be able to save a new location', function(done) {
+      var newLocation = {
+        name: faker.town,
+        loc: [faker.longitude, faker.latitude]
+      };
+      api.post('/api/locations')
+         .set('Accept', 'application/x-www-form-urlencoded')
+         .send(newLocation)
+         .expect('Content-Type', '/json/')
+         .expect(200)
+         .end(function(err, res) {
+            expect(res.body).to.be.a('object');
+            expect(res.body.status).to.be.true;
+            expect(res.body.location).to.be.a('object');
+            expect(res.body.location.loc).to.be.a('array');
+            done();
+          });
+    });
+  });
 });
