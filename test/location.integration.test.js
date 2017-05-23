@@ -150,4 +150,37 @@ describe('Location CRUD integration testing', function() {
          });
     });
   });
+
+
+  describe('DELETE:/locations/:id delete a location', function() {
+
+    var response = {};
+
+    before(function(done) {
+      var newLocation = {
+        name: faker.address.streetName(),
+        loc: [faker.address.longitude(), faker.address.latitude()]
+      };
+      api.post('/api/locations')
+         .set('Accept', 'application/x-www-form-urlencoded')
+         .send(newLocation)
+         .expect('Content-Type', '/json/')
+         .expect(200)
+         .end(function(err, res) {
+           response = res.body;
+            done();
+          });
+    });
+
+    it('should be able to delete a location using id and return an object of the deleted location', function(done) {
+      api.delete('/api/locations/' + response.todo._id)
+         .expect(200)
+         .end(function(err, res) {
+           expect(res.body.status).to.be.true;
+           expect(res.body.location).to.be.a('object');
+           expect(res.body.location.loc).to.be.a('array');
+           done();
+         });
+    });
+  });
 });
