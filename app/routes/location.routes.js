@@ -15,4 +15,7 @@ router.post('/locations', LocationController.Create);
 // PUT:/locations/:id
 router.put('/locations/:id', LocationController.Update);
 
+// DELETE:/locations/:id
+router.delete('/locations/:id', LocationController.Delete);
+
 module.exports = router;

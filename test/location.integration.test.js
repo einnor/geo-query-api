@@ -173,7 +173,7 @@ describe('Location CRUD integration testing', function() {
     });
 
     it('should be able to delete a location using id and return an object of the deleted location', function(done) {
-      api.delete('/api/locations/' + response.todo._id)
+      api.delete('/api/locations/' + response.location._id)
          .expect(200)
          .end(function(err, res) {
            expect(res.body.status).to.be.true;

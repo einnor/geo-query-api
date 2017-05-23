@@ -24,7 +24,7 @@ var LocationCtrl = {
     });
   },
 
-  // Post a todo into Database
+  // Post a location into Database
   Create: function(req, res){
     var location = new Location(req.body);
     location.save(function(err, location){
@@ -36,7 +36,7 @@ var LocationCtrl = {
     });
   },
 
-  //Updating a todo status based on an ID
+  // Update a location name based on an ID
   Update: function(req, res){
     var name = req.body.name;
     Location.findById(req.params.id, function(err, location){
@@ -47,6 +47,17 @@ var LocationCtrl = {
         }
         res.json({status: true, message: "Name was successfully updated!", location: location});
       });
+    });
+  },
+
+  // Delete a location baed on an ID
+  Delete: function(req, res){
+    Location.remove({_id: req.params.id}, function(err, location){
+      if(err) {
+        res.json({status: false, error: "Location was not deleted!"});
+        return;
+      }
+      res.json({status: true, message: "Location was successfully deleted!!", location: location});
     });
   }
 }
