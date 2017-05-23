@@ -15,6 +15,9 @@ router.post('/locations', LocationController.Create);
 // POST:/locations/seed
 router.post('/locations/seed', LocationController.Seed);
 
+// POST:/locations/geofencing
+router.post('/locations/geofencing', LocationController.Geofencing);
+
 // PUT:/locations/:id
 router.put('/locations/:id', LocationController.Update);
 

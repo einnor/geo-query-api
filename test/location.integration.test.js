@@ -183,6 +183,25 @@ describe('Location CRUD integration testing', function() {
     });
   });
 
+
+  describe('POST:/locations/geofencing Return a subset S of coordinates from N that are within a Radius R meters around the user’s L', function() {
+
+    it('should return a set of coordinates that are within radius R of location L', function(done) {
+      var input = {longitude: faker.address.longitude(), latitude: faker.address.latitude(), radius: faker.random.number(1, 15)};
+      api.post('/api/locations/geofencing')
+         .set('Accept', 'application/x-www-form-urlencoded')
+         .send(input)
+         .expect('Content-Type', '/json/')
+         .expect(200)
+         .end(function(err, res) {
+            expect(res.body).to.be.a('object');
+            expect(res.body.location).to.be.a('array');
+            done();
+          });
+    });
+  });
+  
+
   describe('POST:/locations/seed auto-populate DB with locations around arbitary location L', function() {
 
     before(function (done) {
@@ -203,23 +222,6 @@ describe('Location CRUD integration testing', function() {
             expect(res.body.location).to.have.lengthOf(100);
             done();
           });
-    });
-
-    describe('POST:/locations/geofencing Return a subset S of coordinates from N that are within a Radius R meters around the user’s L', function() {
-
-      it('should return a set of coordinates that are within radiu R of locaation L', function(done) {
-        var input = {longitude: faker.address.longitude(), latitude: faker.address.latitude(), radius: faker.random.number(1, 15)};
-        api.post('/api/locations/geofencing')
-           .set('Accept', 'application/x-www-form-urlencoded')
-           .send(input)
-           .expect('Content-Type', '/json/')
-           .expect(200)
-           .end(function(err, res) {
-              expect(res.body).to.be.a('object');
-              expect(res.body.location).to.be.a('array');
-              done();
-            });
-      });
     });
   });
 });

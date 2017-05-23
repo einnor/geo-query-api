@@ -63,14 +63,35 @@ var LocationCtrl = {
 
   // Seed random locations in the DB
   Seed: function(req, res){
+    var coords = [req.body.longitude || 0, req.body.latitude || 0]; // if longitude and/or latitude is undefined, set to 0
     var location = new Location({
       name: '',
-      loc: [req.body.longitude, req.body.latitude]
+      loc: coords
     });
     location.seed(function(err, locations){
       if(err) {
         res.json({status: false, error: "Something went wrong"});
         return;
+      }
+      res.json({status: true, location: locations});
+    });
+  },
+
+  // Geofencing, takes in user's coordiantes L and radius R
+  Geofencing: function(req, res) {
+    var radius = req.body.radius || 8; // set radius to 8km if undefined
+    radius = radius / 6371; // convert distance to radians. the radius of Earth is approximately 6371km
+    var coords = [req.body.longitude || 0, req.body.latitude || 0]; // if longitude and/or latitude is undefined, set to 0
+
+    // find nearest locations to user's coordinates L
+    Location.find({
+      loc: {
+        $near: coords,
+        $maxDistance: radius
+      }
+    }, function(err, locations) {
+      if (err) {
+        res.json({status: false, error: "Something went wrong"});
       }
       res.json({status: true, location: locations});
     });

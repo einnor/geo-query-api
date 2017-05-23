@@ -22,7 +22,7 @@ LocationSchema.methods.seed = function(cb) {
   for (var i = 0; i < 100; i++) {
     location = new Location({
       name: faker.address.streetName(),
-      loc: [faker.address.longitude(longitude - 10, longitude + 10), faker.address.latitude(latitude - 10, latitude + 10)]
+      loc: [faker.finance.amount(longitude - 5, longitude + 5, 4), faker.finance.amount(latitude - 5, latitude + 5, 4)]
     });
     location.save();
   }
