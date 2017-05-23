@@ -26,7 +26,7 @@ LocationSchema.methods.seed = function(callback) {
     });
   }
 
-  return this.model('Location').find(function(err, val) {
+  return this.model('Location').find({}, function(err, val) {
     callback(!!val);
   });
 };

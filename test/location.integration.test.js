@@ -1,14 +1,13 @@
 "use strict";
 
 var request = require('supertest');
-var api = request('http://localhost:3001');
+var api = request('http://localhost:3000');
 var chai = require('chai');
 var expect = chai.expect;
 var should = chai.should;
 var app = require('../server.js');
 var mongoose = require('mongoose');
 var Location = mongoose.model('Location', 'LocationSchema');
-var agent = request.agent(app);
 
 describe('Location CRUD integration testing', function() {
 
@@ -37,5 +36,5 @@ describe('Location CRUD integration testing', function() {
            done();
          });
     });
-  }
-}
+  });
+});
