@@ -183,4 +183,23 @@ describe('Location CRUD integration testing', function() {
          });
     });
   });
+
+  describe('POST:/locations/seed auto-populate DB with locations around arbitary location L', function() {
+
+    it('should be able to seed the DB with random locations', function(done) {
+      var airbitaryLocationL = {
+        loc: [faker.address.longitude(), faker.address.latitude()]
+      };
+      api.post('/api/locations/seed')
+         .set('Accept', 'application/x-www-form-urlencoded')
+         .send(airbitaryLocationL)
+         .expect('Content-Type', '/json/')
+         .expect(200)
+         .end(function(err, res) {
+            expect(res.body).to.be.a('array');
+            expect(res.body).to.have.lengthOf(10);
+            done();
+          });
+    });
+  });
 });
