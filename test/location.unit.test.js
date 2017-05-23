@@ -116,19 +116,21 @@ describe('Location Unit Testing', function() {
 
   describe('seed() method to auto-populate the DB with random locations about an arbitary location L', function() {
 
-    it('should add 100 random locations about location L', function(done) {
+    it('should add 10 random locations about location L', function(done) {
       var LocationMock = sinon.mock(new Location({
         name: '',
         loc: [26.418, 14.9706]
       }));
       var location = LocationMock.object;
-      LocationMock.expects('seed');
+      var expectedResult = [];
+      LocationMock.expects('seed').yields(null, expectedResult);
 
       location.seed(function(err, result) {
+        console.log(result);
         LocationMock.verify();
         LocationMock.restore();
         expect(result).to.be.a('array');
-        expect(result).to.have.lengthOf(100);
+        expect(result).to.have.lengthOf(10);
         done();
       });
     });
