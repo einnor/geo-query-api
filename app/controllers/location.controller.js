@@ -12,6 +12,17 @@ var LocationCtrl = {
       res.json({status: true, location: locations});
     });
   },
+
+  // Get location by id from the Database
+    Show: function(req, res){
+        Location.findOne({_id: req.params.id}, function(err, location){
+          if(err) {
+            res.json({status: false, error: "Something went wrong"});
+            return;
+          }
+          res.json({status: true, location: location});
+        });
+    },
 }
 
 module.exports = LocationCtrl;
