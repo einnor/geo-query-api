@@ -207,6 +207,47 @@ describe('Location CRUD integration testing', function() {
     });
   });
 
+//
+  describe('POST:/locations/geofiltering/polygon Return a subset S of coordinates from N that are within a polygon defined by a series of GPS coordinates', function() {
+
+    it('should return a set of coordinates that are within a polygon defined by a series of GPS coordinates', function(done) {
+      var input = {
+        coords: [
+          {
+            longitude: faker.address.longitude(),
+            latitude: faker.address.latitude(),
+          },
+          {
+            longitude: faker.address.longitude(),
+            latitude: faker.address.latitude(),
+          },
+          {
+            longitude: faker.address.longitude(),
+            latitude: faker.address.latitude(),
+          },{
+            longitude: faker.address.longitude(),
+            latitude: faker.address.latitude(),
+          },
+          {
+            longitude: faker.address.longitude(),
+            latitude: faker.address.latitude(),
+          }
+        ];
+      }
+      api.post('/api/locations/geofiltering/polygon')
+         .set('Accept', 'application/x-www-form-urlencoded')
+         .send(input)
+         .expect('Content-Type', '/json/')
+         .expect(200)
+         .end(function(err, res) {
+           console.log(res.body);
+            expect(res.body).to.be.a('object');
+            expect(res.body.location).to.be.a('array');
+            done();
+          });
+    });
+  });
+
 
   describe('POST:/locations/geofencing Return a subset S of coordinates from N that are within a Radius R meters around the user’s L', function() {
 
