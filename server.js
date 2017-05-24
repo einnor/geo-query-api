@@ -12,6 +12,8 @@ var locations = require('./app/routes/location.routes');
 // DB and port configs
 var config = require('./app/config/config');
 
+app.use(express.static('public'));
+
 // log every request to the console
 app.use(morgan('dev'));
 

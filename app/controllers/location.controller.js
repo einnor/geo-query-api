@@ -57,7 +57,7 @@ var LocationCtrl = {
         res.json({status: false, error: err.message});
         return;
       }
-      res.json({status: true, message: "Location was successfully deleted!!", location: location});
+      res.json({status: true, message: "Location was successfully deleted!"});
     });
   },
 
@@ -73,14 +73,14 @@ var LocationCtrl = {
         res.json({status: false, error: err.message});
         return;
       }
-      res.json({status: true, location: locations});
+      res.json({status: true, message: "Location database successfully seeded with 100 documents!", location: locations});
     });
   },
 
   // Geofencing, takes in user's coordiantes L and radius R
   Geofencing: function(req, res) {
-    var radius = parseFloat(req.body.radius) || 8; // set radius to 8km if undefined
-    radius = radius / 6371; // convert distance to radians. the radius of Earth is approximately 6371km
+    var radius_km = parseFloat(req.body.radius) || 8; // set radius to 8km if undefined
+    radius = radius_km / 6371; // convert distance to radians. the radius of Earth is approximately 6371km
     var coords = [parseFloat(req.body.longitude) || 0, parseFloat(req.body.latitude) || 0]; // if longitude and/or latitude is undefined, set to 0
 
     // find nearest locations to user's coordinates L
@@ -94,18 +94,18 @@ var LocationCtrl = {
         res.json({status: false, error: err.message});
         return;
       }
-      res.json({status: true, location: locations});
+      res.json({status: true, message: "Results of locations within " + radius_km + "km of [" + req.body.longitude + "," + req.body.latitude + "]", location: locations});
     });
   },
 
   // Geofencing, takes in user's coordiantes L and radius R
   GeofilteringRectangle: function(req, res) {
-    var width = parseFloat(req.body.width) || 10; // set width to 10km if undefined
-    var length = parseFloat(req.body.length) || 15; // set height to 15km if undefined
+    var width_km = parseFloat(req.body.width) || 10; // set width to 10km if undefined
+    var length_km = parseFloat(req.body.length) || 15; // set height to 15km if undefined
 
     // convert distance to radians. the radius of Earth is approximately 6371km
-    width = width / 6371;
-    length = length / 6371;
+    width = width_km / 6371;
+    length = length_km / 6371;
     var longitude = parseFloat(req.body.longitude) || 0;
     var latitude = parseFloat(req.body.latitude) || 0;
     var coords = [longitude, latitude]; // if longitude and/or latitude is undefined, set to 0
@@ -134,7 +134,7 @@ var LocationCtrl = {
         res.json({status: false, error: err.message});
         return;
       }
-      res.json({status: true, location: locations});
+      res.json({status: true, message: "Results of locations within rectangular region of length " + length_km + "km and width " + width_km + "km of [" + longitude + "," + latitude + "]", location: locations});
     });
   }
 }

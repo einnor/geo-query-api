@@ -36,7 +36,8 @@
     "mongoose": "^4.3.5",
     "morgan": "^1.6.1",
     "opbeat": "^3.6.6",
-    "faker": "4.1.0"
+    "faker": "4.1.0",
+    "apidoc": "0.17.6"
   },
   "devDependencies": {
     "chai": "^3.5.0",
