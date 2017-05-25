@@ -1,4 +1,5 @@
 var Location = require('../models/location.model');
+var math = require('mathjs');
 
 var LocationCtrl = {
 
@@ -98,7 +99,7 @@ var LocationCtrl = {
     });
   },
 
-  // Geofencing, takes in user's coordiantes L and radius R
+  // Geofiltering, takes in user's coordiantes L and radius R
   GeofilteringRectangle: function(req, res) {
     var width_km = parseFloat(req.body.width) || 10; // set width to 10km if undefined
     var length_km = parseFloat(req.body.length) || 15; // set height to 15km if undefined
@@ -135,6 +136,34 @@ var LocationCtrl = {
         return;
       }
       res.json({status: true, message: "Results of locations within rectangular region of length " + length_km + "km and width " + width_km + "km of [" + longitude + "," + latitude + "]", location: locations});
+    });
+  },
+
+  // GeofilteringRectangle Return a subset S of coordinates from N that are within a polygon defined by a series of GPS coordinates
+  GeofilteringPolygon: function(req, res) {
+    var longitude_array = req.body.longitudes.map(Number);
+    var latitude_array = req.body.latitudes.map(Number);
+
+    var coords = [math.transpose([longitude_array, latitude_array])];
+
+    var coords = coords.push(coords[0]); // Add the first coord again as the last coord so as to complete the loop
+
+    // find all locations within defined polygon
+    Location.find({
+      loc: {
+        $geoWithin: {
+          $geometry: {
+             type : "Polygon",
+             coordinates: [[[coords]]]
+          }
+        }
+      }
+    }, function(err, locations) {
+      if (err) {
+        res.json({status: false, error: err.message});
+        return;
+      }
+      res.json({status: true, message: "Results of locations within polygon of defined coordinates", location: locations});
     });
   }
 }

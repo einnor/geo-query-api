@@ -177,7 +177,7 @@ describe('Location CRUD integration testing', function() {
          .expect(200)
          .end(function(err, res) {
            expect(res.body.status).to.be.true;
-           expect(res.body.location).to.be.a('object');
+           expect(res.body.message).to.be.equal('Location was successfully deleted!');
            done();
          });
     });
@@ -212,27 +212,8 @@ describe('Location CRUD integration testing', function() {
 
     it('should return a set of coordinates that are within a polygon defined by a series of GPS coordinates', function(done) {
       var input = {
-        coords: [
-          {
-            longitude: faker.address.longitude(),
-            latitude: faker.address.latitude(),
-          },
-          {
-            longitude: faker.address.longitude(),
-            latitude: faker.address.latitude(),
-          },
-          {
-            longitude: faker.address.longitude(),
-            latitude: faker.address.latitude(),
-          },{
-            longitude: faker.address.longitude(),
-            latitude: faker.address.latitude(),
-          },
-          {
-            longitude: faker.address.longitude(),
-            latitude: faker.address.latitude(),
-          }
-        ];
+        longitudes: [faker.address.longitude(),faker.address.longitude(),faker.address.longitude(),faker.address.longitude(),faker.address.longitude()],
+        latitudes: [faker.address.latitude(),faker.address.latitude(),faker.address.latitude(),faker.address.latitude(),faker.address.latitude()]
       }
       api.post('/api/locations/geofiltering/polygon')
          .set('Accept', 'application/x-www-form-urlencoded')

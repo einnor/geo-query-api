@@ -220,6 +220,8 @@ router.post('/locations/geofencing', LocationController.Geofencing);
  */
 router.post('/locations/geofiltering/rectangle', LocationController.GeofilteringRectangle);
 
+router.post('/locations/geofiltering/polygon', LocationController.GeofilteringPolygon);
+
 /**
  * @api {put} /api/locations/:id Update a location
  * @apiGroup Locations

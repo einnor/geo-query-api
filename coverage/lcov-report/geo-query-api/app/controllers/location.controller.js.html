@@ -20,24 +20,24 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.19% </span>
+        <span class="strong">78.08% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>48/63</span>
+        <span class='fraction'>57/73</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">55.88% </span>
+        <span class="strong">58.33% </span>
         <span class="quiet">Branches</span>
-        <span class='fraction'>19/34</span>
+        <span class='fraction'>21/36</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">100% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>17/17</span>
+        <span class='fraction'>19/19</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">76.19% </span>
+        <span class="strong">78.08% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>48/63</span>
+        <span class='fraction'>57/73</span>
       </div>
     </div>
   </div>
@@ -185,7 +185,37 @@
 140
 141
 142
-143</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+143
+144
+145
+146
+147
+148
+149
+150
+151
+152
+153
+154
+155
+156
+157
+158
+159
+160
+161
+162
+163
+164
+165
+166
+167
+168
+169
+170
+171
+172</td><td class="line-coverage quiet"><span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -322,12 +352,41 @@
 <span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-yes">1×</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-no">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-yes">1×</span>
 <span class="cline-any cline-neutral">&nbsp;</span></td><td class="text"><pre class="prettyprint lang-js">var Location = require('../models/location.model');
+var math = require('mathjs');
 &nbsp;
 var LocationCtrl = {
 &nbsp;
@@ -386,7 +445,7 @@ var LocationCtrl = {
 <span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
-      res.json({status: true, message: "Location was successfully deleted!!", location: location});
+      res.json({status: true, message: "Location was successfully deleted!"});
     });
   },
 &nbsp;
@@ -402,14 +461,14 @@ var LocationCtrl = {
 <span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
-      res.json({status: true, location: locations});
+      res.json({status: true, message: "Location database successfully seeded with 100 documents!", location: locations});
     });
   },
 &nbsp;
   // Geofencing, takes in user's coordiantes L and radius R
   Geofencing: function(req, res) {
-    var radius = parseFloat(req.body.radius) || 8; // set radius to 8km if undefined
-    radius = radius / 6371; // convert distance to radians. the radius of Earth is approximately 6371km
+    var radius_km = parseFloat(req.body.radius) || 8; // set radius to 8km if undefined
+    radius = radius_km / 6371; // convert distance to radians. the radius of Earth is approximately 6371km
     var coords = [parseFloat(req.body.longitude) || <span class="branch-1 cbranch-no" title="branch not covered" >0,</span> parseFloat(req.body.latitude) || <span class="branch-1 cbranch-no" title="branch not covered" >0]</span>; // if longitude and/or latitude is undefined, set to 0
 &nbsp;
     // find nearest locations to user's coordinates L
@@ -423,18 +482,18 @@ var LocationCtrl = {
 <span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
-      res.json({status: true, location: locations});
+      res.json({status: true, message: "Results of locations within " + radius_km + "km of [" + req.body.longitude + "," + req.body.latitude + "]", location: locations});
     });
   },
 &nbsp;
-  // Geofencing, takes in user's coordiantes L and radius R
+  // Geofiltering, takes in user's coordiantes L and radius R
   GeofilteringRectangle: function(req, res) {
-    var width = parseFloat(req.body.width) || <span class="branch-1 cbranch-no" title="branch not covered" >10;</span> // set width to 10km if undefined
-    var length = parseFloat(req.body.length) || 15; // set height to 15km if undefined
+    var width_km = parseFloat(req.body.width) || 10; // set width to 10km if undefined
+    var length_km = parseFloat(req.body.length) || 15; // set height to 15km if undefined
 &nbsp;
     // convert distance to radians. the radius of Earth is approximately 6371km
-    width = width / 6371;
-    length = length / 6371;
+    width = width_km / 6371;
+    length = length_km / 6371;
     var longitude = parseFloat(req.body.longitude) || <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
     var latitude = parseFloat(req.body.latitude) || <span class="branch-1 cbranch-no" title="branch not covered" >0;</span>
     var coords = [longitude, latitude]; // if longitude and/or latitude is undefined, set to 0
@@ -463,7 +522,35 @@ var LocationCtrl = {
 <span class="cstat-no" title="statement not covered" >        res.json({status: false, error: err.message});</span>
 <span class="cstat-no" title="statement not covered" >        return;</span>
       }
-      res.json({status: true, location: locations});
+      res.json({status: true, message: "Results of locations within rectangular region of length " + length_km + "km and width " + width_km + "km of [" + longitude + "," + latitude + "]", location: locations});
+    });
+  },
+&nbsp;
+  // GeofilteringRectangle Return a subset S of coordinates from N that are within a polygon defined by a series of GPS coordinates
+  GeofilteringPolygon: function(req, res) {
+    var longitude_array = req.body.longitudes.map(Number);
+    var latitude_array = req.body.latitudes.map(Number);
+&nbsp;
+    var coords = [math.transpose([longitude_array, latitude_array])];
+&nbsp;
+    var coords = coords.push(coords[0]); // Add the first coord again as the last coord so as to complete the loop
+&nbsp;
+    // find all locations within defined polygon
+    Location.find({
+      loc: {
+        $geoWithin: {
+          $geometry: {
+             type : "Polygon",
+             coordinates: [[[coords]]]
+          }
+        }
+      }
+    }, function(err, locations) {
+      <span class="missing-if-branch" title="else path not taken" >E</span>if (err) {
+        res.json({status: false, error: err.message});
+        return;
+      }
+<span class="cstat-no" title="statement not covered" >      res.json({status: true, message: "Results of locations within polygon of defined coordinates", location: locations});</span>
     });
   }
 }
@@ -475,7 +562,7 @@ module.exports = LocationCtrl;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Tue May 23 2017 20:34:33 GMT+0300 (EAT)
+  generated by <a href="http://istanbul-js.org/" target="_blank">istanbul</a> at Thu May 25 2017 12:38:11 GMT+0300 (EAT)
 </div>
 </div>
 <script src="../../../prettify.js"></script>
