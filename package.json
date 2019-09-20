@@ -32,7 +32,7 @@
     "codecov": "^1.0.1",
     "cors": "^2.7.1",
     "express": "^4.13.3",
-    "method-override": "^2.3.5",
+    "method-override": "^3.0.0",
     "mongoose": "^4.3.5",
     "morgan": "^1.6.1",
     "opbeat": "^3.6.6",
