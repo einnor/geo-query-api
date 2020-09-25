@@ -53,6 +53,6 @@
     "should": "^8.2.2",
     "sinon": "^1.17.3",
     "sinon-mongoose": "^1.2.1",
-    "supertest": "^1.2.0"
+    "supertest": "^5.0.0"
   }
 }
