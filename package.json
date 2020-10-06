@@ -29,7 +29,7 @@
   "license": "ISC",
   "dependencies": {
     "body-parser": "^1.14.2",
-    "codecov": "^1.0.1",
+    "codecov": "^3.8.0",
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "method-override": "^2.3.5",
@@ -42,7 +42,7 @@
   },
   "devDependencies": {
     "chai": "^3.5.0",
-    "codecov": "^1.0.1",
+    "codecov": "^3.8.0",
     "grunt": "^0.4.5",
     "grunt-env": "^0.4.4",
     "grunt-environmental": "^0.1.5",
