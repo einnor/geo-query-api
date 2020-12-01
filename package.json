@@ -33,7 +33,7 @@
     "cors": "^2.7.1",
     "express": "^4.13.3",
     "method-override": "^2.3.5",
-    "mongoose": "^4.3.5",
+    "mongoose": "^5.11.0",
     "morgan": "^1.6.1",
     "opbeat": "^3.6.6",
     "faker": "4.1.0",
