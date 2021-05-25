@@ -38,7 +38,7 @@
     "opbeat": "^3.6.6",
     "faker": "4.1.0",
     "apidoc": "0.17.6",
-    "mathjs": "3.13.1"
+    "mathjs": "9.4.1"
   },
   "devDependencies": {
     "chai": "^3.5.0",
