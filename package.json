@@ -49,7 +49,7 @@
     "grunt-nodemon": "^0.4.1",
     "grunt-simple-mocha": "^0.4.1",
     "istanbul": "^0.4.2",
-    "mocha": "^2.4.5",
+    "mocha": "^9.0.1",
     "should": "^8.2.2",
     "sinon": "^1.17.3",
     "sinon-mongoose": "^1.2.1",
